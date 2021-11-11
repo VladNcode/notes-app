@@ -42,8 +42,11 @@ const readNote = title => {
     return onsole.log(chalk.bgRed('Note not found!'));
   }
 
-  console.log(chalk.bgGreen('Here is your note:'));
-  console.log(`Title: ${read.title}\nBody: ${read.body}`);
+  console.log(
+    `${chalk.bgGreen('Here is your note:')}
+${chalk.bgYellowBright(`Title: ${read.title}`)}
+${chalk.bgCyanBright(`Body: ${read.body}`)}`
+  );
 };
 
 const getNotesList = () => {
