@@ -22,6 +22,18 @@ const addNote = (title, body) => {
   console.log(chalk.bgGreen('New note added!'));
 };
 
+const updateNote = (title, newTitle, newBody) => {
+  const notes = loadNotes();
+  const read = notes.find(el => el.title === title);
+  if (!read) return console.log(chalk.bgRed('Note not found!'));
+
+  notes.map(el =>
+    el.title === title ? ((el.title = newTitle), (el.body = newBody)) : el
+  );
+  saveNotes(notes);
+  console.log(chalk.bgGreen('Note successfully updated!'));
+};
+
 const removeNote = title => {
   const notes = loadNotes();
   const newNotes = notes.filter(el => el.title !== title);
@@ -39,13 +51,15 @@ const readNote = title => {
   const read = notes.find(el => el.title === title);
 
   if (!read) {
-    return onsole.log(chalk.bgRed('Note not found!'));
+    return console.log(chalk.bgRed('Note not found!'));
   }
 
   console.log(
-    `${chalk.bgGreen('Here is your note:')}
+    `
+${chalk.bgGreen('Here is your note:')}
 ${chalk.bgYellowBright(`Title: ${read.title}`)}
-${chalk.bgCyanBright(`Body: ${read.body}`)}`
+${chalk.bgCyanBright(`Body: ${read.body}`)}
+`
   );
 };
 
@@ -68,4 +82,5 @@ module.exports = {
   addNote,
   removeNote,
   readNote,
+  updateNote,
 };
