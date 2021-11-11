@@ -19,22 +19,22 @@ yargs
         type: 'string',
       },
     },
-    a => console.log(`Title: ${a.title}, Body: ${a.body}`)
+    a => notes.addNote(a.title, a.body)
   )
   .command(
     'remove',
     'Remove a note!',
     { title: { describe: 'Note title' } },
-    a => console.log('Removing a new note', a)
+    a => notes.removeNote(a.title)
   )
   .command('read', 'Read a note!', { title: { describe: 'Note title' } }, a =>
-    console.log('Reading a note', a)
+    notes.readNote(a.title)
   )
   .command(
     'list',
     'List your notes!',
     { title: { describe: 'Note title' } },
-    a => console.log('Listing out all notes!', a)
+    a => notes.getNotesList()
   )
   .parse();
 
