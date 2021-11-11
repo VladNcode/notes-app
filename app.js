@@ -24,17 +24,20 @@ yargs
   .command(
     'remove',
     'Remove a note!',
-    { title: { describe: 'Note title' } },
+    { title: { describe: 'Note title', demandOption: true, type: 'string' } },
     a => notes.removeNote(a.title)
   )
-  .command('read', 'Read a note!', { title: { describe: 'Note title' } }, a =>
-    notes.readNote(a.title)
+  .command(
+    'read',
+    'Read a note!',
+    { title: { describe: 'Note title', demandOption: true, type: 'string' } },
+    a => notes.readNote(a.title)
   )
   .command(
     'list',
     'List your notes!',
     { title: { describe: 'Note title' } },
-    a => notes.getNotesList()
+    () => notes.getNotesList()
   )
   .parse();
 

@@ -1,4 +1,5 @@
 const fs = require('fs');
+const chalk = require('chalk');
 
 const saveNotes = notes => {
   fs.writeFileSync('notes.json', JSON.stringify(notes));
@@ -19,28 +20,29 @@ const addNote = (title, body) => {
 
   notes.push({ title, body });
   saveNotes(notes);
-  console.log('New note added!');
+  console.log(chalk.bgGreen('New note added!'));
 };
 
 const removeNote = title => {
   const notes = loadNotes();
   const newNotes = notes.filter(el => el.title !== title);
 
-  if (newNotes.length !== notes.length) {
-    console.log('Note successfully removed!');
+  if (newNotes.length < notes.length) {
+    console.log(chalk.bgGreen('Note successfully removed!'));
     return saveNotes(newNotes);
   }
 
-  console.log('Note not found!');
+  console.log(chalk.bgRed('Note not found!'));
 };
 
 const readNote = title => {
   const notes = loadNotes();
   const read = notes.filter(el => el.title === title);
+
   if (read.length > 0)
     return console.log(`Title: ${read[0].title}, Body: ${read[0].body}`);
 
-  console.log('Note not found!');
+  console.log(chalk.bgRed('Note not found!'));
 };
 
 const getNotesList = () => {
@@ -48,8 +50,12 @@ const getNotesList = () => {
   const list = notes
     .reduce((acc, note) => acc + note.title + ', ', '')
     .slice(0, -2);
+
   if (list.length > 0) return console.log(`Available notes: ${list}`);
-  console.log('There is no notes yet! Add a new one!');
+
+  console.log(
+    chalk.bgRed('There is no notes yet! Go ahead and add a new one!')
+  );
 };
 
 module.exports = {
