@@ -1,10 +1,5 @@
 [
-  {
-    "title": "sports",
-    "body": "football, baseball, basketball"
-  },
-  {
-    "title": "t",
-    "body": "football, baseball, basketball"
-  }
+  { "title": "sports", "body": "football, baseball, basketball" },
+  { "title": "t", "body": "football, baseball, basketball" },
+  { "title": "puma", "body": "nike, adidas" }
 ]

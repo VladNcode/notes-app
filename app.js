@@ -1,7 +1,7 @@
 const yargs = require('yargs');
-const chalk = require('chalk');
 const notes = require('./notes');
-const { argv } = require('yargs');
+// const chalk = require('chalk');
+// const { argv } = require('yargs');
 
 yargs
   .command(

@@ -1,9 +1,8 @@
 const fs = require('fs');
 const chalk = require('chalk');
 
-const saveNotes = notes => {
+const saveNotes = notes =>
   fs.writeFileSync('notes.json', JSON.stringify(notes));
-};
 
 const loadNotes = () => {
   try {
@@ -15,8 +14,8 @@ const loadNotes = () => {
 
 const addNote = (title, body) => {
   const notes = loadNotes();
-  const duplicateNotes = notes.filter(el => el.title === title);
-  if (duplicateNotes.length > 0) return console.log('Note already exists!');
+  const singDupl = notes.find(el => el.title === title);
+  if (singDupl) return console.log(chalk.bgRed('Note title taken!'));
 
   notes.push({ title, body });
   saveNotes(notes);
@@ -27,22 +26,24 @@ const removeNote = title => {
   const notes = loadNotes();
   const newNotes = notes.filter(el => el.title !== title);
 
-  if (newNotes.length < notes.length) {
-    console.log(chalk.bgGreen('Note successfully removed!'));
-    return saveNotes(newNotes);
+  if (!(newNotes.length < notes.length)) {
+    return console.log(chalk.bgRed('Note not found!'));
   }
 
-  console.log(chalk.bgRed('Note not found!'));
+  console.log(chalk.bgGreen('Note successfully removed!'));
+  saveNotes(newNotes);
 };
 
 const readNote = title => {
   const notes = loadNotes();
-  const read = notes.filter(el => el.title === title);
+  const read = notes.find(el => el.title === title);
 
-  if (read.length > 0)
-    return console.log(`Title: ${read[0].title}, Body: ${read[0].body}`);
+  if (!read) {
+    return onsole.log(chalk.bgRed('Note not found!'));
+  }
 
-  console.log(chalk.bgRed('Note not found!'));
+  console.log(chalk.bgGreen('Here is your note:'));
+  console.log(`Title: ${read.title}\nBody: ${read.body}`);
 };
 
 const getNotesList = () => {
@@ -51,11 +52,12 @@ const getNotesList = () => {
     .reduce((acc, note) => acc + note.title + ', ', '')
     .slice(0, -2);
 
-  if (list.length > 0) return console.log(`Available notes: ${list}`);
+  if (!(list.length > 0))
+    return console.log(
+      chalk.bgRed('There is no notes yet! Go ahead and add a new one!')
+    );
 
-  console.log(
-    chalk.bgRed('There is no notes yet! Go ahead and add a new one!')
-  );
+  console.log(chalk.bgGreen('Available notes:'), list);
 };
 
 module.exports = {
